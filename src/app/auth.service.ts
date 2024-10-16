@@ -2,37 +2,38 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private userRole: string | null = null;
+  private role: string = ''; // 'admin', 'gerente', 'usuario'
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   login(username: string, password: string): boolean {
-    // Exemplo básico de login. Substitua por autenticação real.
+    // Simulação de login com base em credenciais
     if (username === 'admin' && password === 'admin') {
-      this.userRole = 'admin';
+      this.role = 'admin';
+      return true;
     } else if (username === 'gerente' && password === 'gerente') {
-      this.userRole = 'gerente';
+      this.role = 'gerente';
+      return true;
     } else if (username === 'usuario' && password === 'usuario') {
-      this.userRole = 'usuario';
-    } else {
-      return false;
+      this.role = 'usuario';
+      return true;
     }
-    return true;
+    return false;
   }
 
-  logout(): void {
-    this.userRole = null;
-    this.router.navigate(['/login']);
-  }
-
-  getUserRole(): string | null {
-    return this.userRole;
+  getRole(): string {
+    return this.role;
   }
 
   isLoggedIn(): boolean {
-    return this.userRole !== null;
+    return this.role !== '';
+  }
+
+  logout() {
+    this.role = '';
+    this.router.navigate(['/login']);
   }
 }
